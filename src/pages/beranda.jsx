@@ -36,36 +36,11 @@ export default function Beranda() {
   const navigate = useNavigate();
 
   // =========================================================
-  // 🔥 SINKRONISASI LUAR STATUS AKUN (URL RELATIF ANTI-CORS)
+  // 🔥 BYPASS VALIDASI DATABASE PHP (AMAN UNTUK DEPLOY DI VERCEL)
   // =========================================================
   useEffect(() => {
-    const syncProfileStatus = async () => {
-      const currentUser = JSON.parse(localStorage.getItem("user"));
-      if (!currentUser?.id_user) return;
-
-      try {
-        // Menggunakan URL Relatif agar mengikuti domain hosting secara otomatis
-        const response = await fetch(`/api-sisehat/get_profile.php?id_user=${currentUser.id_user}`);
-        if (!response.ok) return;
-
-        const result = await response.json().catch(() => null);
-
-        // Jika data profil memang belum ada (Akun Baru), set status false secara silent tanpa pop-up eror
-        if (result && result.status === "error") {
-          localStorage.setItem("profileComplete", "false");
-          return;
-        }
-
-        // Jika data ada di database, sinkronkan ke local storage
-        if (result && result.status === "success") {
-          localStorage.setItem("profileComplete", "true");
-        }
-      } catch (error) {
-        console.warn("Sinkronisasi latar beranda aktif dalam mode lokal offline.");
-      }
-    };
-
-    syncProfileStatus();
+    // Langsung set status profil menjadi "true" agar halaman tidak terkunci
+    localStorage.setItem("profileComplete", "true");
   }, []);
 
   // 🔥 TOTAL RESPONDEN
@@ -208,17 +183,10 @@ export default function Beranda() {
     },
   };
 
-  // 🔥 BUTTON
+  // 🔥 BUTTON (Bypass langsung ke asesmen)
   const handleStart = () => {
-    const isComplete = localStorage.getItem("profileComplete");
-
-    console.log("PROFILE COMPLETE:", isComplete);
-
-    if (isComplete === "true") {
-      navigate("/asesmen");
-    } else {
-      setShowModal(true);
-    }
+    localStorage.setItem("profileComplete", "true");
+    navigate("/asesmen");
   };
 
   // Ambil data user login dari localStorage secara dinamis
