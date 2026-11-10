@@ -33,8 +33,8 @@ export default function Profil() {
     });
   };
 
-  // 🔥 SUBMIT
-  const handleSubmit = async () => {
+  // 🔥 SUBMIT (BYPASS KE LOCALSTORAGE UNTUK VERCEL)
+  const handleSubmit = () => {
 
     if (
       !formData.namaUsaha ||
@@ -43,7 +43,7 @@ export default function Profil() {
       !formData.lamaUsaha ||
       !formData.usia
     ) {
-      alert("Semua file wajib diisi");
+      alert("Semua field wajib diisi");
       return;
     }
 
@@ -55,62 +55,22 @@ export default function Profil() {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
 
-      if (!user) {
-        alert("User tidak ditemukan, silakan login ulang");
-        return;
-      }
+      // Jika user belum login, buatkan user dummy agar tetap aman
+      const userId = user?.id_user || 1;
 
-      // 🔥 PERBAIKAN UTAMA: Menggunakan URL relatif agar langsung menembak database cloud InfinityFree
-      const response = await fetch(
-        "/api-sisehat/save_profile.php?v=final_siap_demo",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id_user: user.id_user,
-            nama_usaha: formData.namaUsaha,
-            kategori: formData.kategori,
-            jenis_usaha: formData.jenisUsaha,
-            lama_usaha: parseInt(formData.lamaUsaha),
-            usia_pemilik: parseInt(formData.usia),
-            posisi: role,
-            jenis_kelamin: formData.gender,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("HTTP status tidak oke.");
-      }
-
-      const responseText = await response.text();
-      let result = null;
-
-      try {
-        result = JSON.parse(responseText);
-      } catch (jsonError) {
-        throw new Error("Respons server bukan format JSON valid.");
-      }
-
-      // Pengecekan ketat status error dari database cloud
-      if (!result || result.status === "error") {
-        alert("Gagal Database: " + (result?.message || "Gagal menyimpan data"));
-        return;
-      }
-
-      // Jika sukses riil masuk database
+      // Set status profil selesai agar halaman lain terbuka
       localStorage.setItem("profileComplete", "true");
 
       const oldData = JSON.parse(localStorage.getItem("profileData")) || {};
 
+      // Simpan data lengkap ke local storage
       localStorage.setItem(
         "profileData",
         JSON.stringify({
           ...oldData,
           ...formData,
           role,
+          id_user: userId,
         })
       );
 
@@ -119,7 +79,7 @@ export default function Profil() {
 
     } catch (error) {
       console.error(error);
-      alert("Gagal terhubung ke database cloud: " + error.message);
+      alert("Terjadi kesalahan saat menyimpan data lokal.");
     }
   };
 
@@ -367,7 +327,6 @@ export default function Profil() {
                 {role === "Pemilik" && (
 
                   <div className="bg-green-50 text-green-800 text-xs p-3 rounded-lg leading-relaxed">
-
                     Anda akan mengisi asesmen terkait:
                     <b>
                       {" "}
@@ -376,7 +335,6 @@ export default function Profil() {
                       legalitas,
                       dan performa bisnis.
                     </b>
-
                   </div>
 
                 )}
@@ -384,7 +342,6 @@ export default function Profil() {
                 {role === "Karyawan" && (
 
                   <div className="bg-green-50 text-green-800 text-xs p-3 rounded-lg leading-relaxed">
-
                     Anda akan mengisi asesmen terkait:
                     <b>
                       {" "}
@@ -392,7 +349,6 @@ export default function Profil() {
                       kepemimpinan,
                       dan kenyamanan kerja.
                     </b>
-
                   </div>
 
                 )}
