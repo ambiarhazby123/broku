@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NavbarDashboard from "../components/NavbarDashboard";
 
 export default function EditProfil() {
   const navigate = useNavigate();
-
-  // ===============================
-  // DIUBAH MENJADI URL RELATIF PENEMBUS CORS INFINITYFREE
-  // ===============================
-  const GET_PROFILE_ENDPOINT = "/api-sisehat/get_profile.php";
-  const SAVE_PROFILE_ENDPOINT = "/api-sisehat/save_profile.php?v=final_siap_demo";
 
   const safeParse = (value) => {
     try {
@@ -21,12 +16,11 @@ export default function EditProfil() {
   const savedData = safeParse(localStorage.getItem("profileData"));
   const user = safeParse(localStorage.getItem("user"));
 
-  const [isLoadingProfile, setIsLoadingProfile] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   // 🔥 FORM
   const [formData, setFormData] = useState({
-    nama: savedData?.nama || user?.name || "",
+    nama: savedData?.nama || user?.name || user?.username || "Pengguna",
     namaUsaha: savedData?.namaUsaha || "",
     jenisUsaha: savedData?.jenisUsaha || "",
     kategori: savedData?.kategori || "",
@@ -35,81 +29,6 @@ export default function EditProfil() {
     gender: savedData?.gender || "Perempuan",
     role: savedData?.role || "",
   });
-
-  // ===============================
-  // AMBIL DATA PROFILE DARI BACKEND
-  // ===============================
-  useEffect(() => {
-    const fetchProfileFromBackend = async () => {
-      const currentUser = safeParse(localStorage.getItem("user"));
-
-      if (!currentUser?.id_user) {
-        return;
-      }
-
-      try {
-        setIsLoadingProfile(true);
-
-        const response = await fetch(`${GET_PROFILE_ENDPOINT}?id_user=${currentUser.id_user}`);
-        
-        // JIKA SERVER MEMBLOKIR, SEGERA LEMPAR KE BLOK CATCH TANPA MERUSAK FORM
-        if (!response.ok) {
-          throw new Error("Koneksi server dibatasi hosting.");
-        }
-
-        const result = await response.json().catch(() => null);
-
-        // 🔥 PERBAIKAN UTAMA UNTUK AKUN BARU: 
-        // Jika server merespon dengan status "error" karena data memang belum diisi,
-        // segera keluar dari fungsi dengan 'return' agar tidak memicu block catch (alert eror).
-        if (result && result.status === "error") {
-          console.log("Mendeteksi akun baru, formulir siap diisi pertama kali.");
-          return;
-        }
-
-        if (!result) {
-          return;
-        }
-
-        const profile = result.data || result.profileData || result.profile || null;
-
-        if (!profile) {
-          return;
-        }
-
-        const mappedProfile = {
-          nama: profile.nama || profile.name || currentUser.name || savedData?.nama || "",
-          namaUsaha: profile.namaUsaha || profile.nama_usaha || savedData?.namaUsaha || "",
-          jenisUsaha: profile.jenisUsaha || profile.jenis_usaha || savedData?.jenisUsaha || "",
-          kategori: profile.kategori || savedData?.kategori || "",
-          lamaUsaha: profile.lamaUsaha || profile.lama_usaha || savedData?.lamaUsaha || "",
-          usia: profile.usia || profile.usia_pemilik || savedData?.usia || "",
-          gender: profile.gender || profile.jenis_kelamin || savedData?.gender || "Perempuan",
-          role: profile.role || profile.posisi || savedData?.role || "",
-        };
-
-        setFormData(mappedProfile);
-        localStorage.setItem("profileData", JSON.stringify(mappedProfile));
-
-        if (
-          mappedProfile.namaUsaha &&
-          mappedProfile.jenisUsaha &&
-          mappedProfile.kategori &&
-          mappedProfile.lamaUsaha &&
-          mappedProfile.usia &&
-          mappedProfile.role
-        ) {
-          localStorage.setItem("profileComplete", "true");
-        }
-      } catch (error) {
-        console.warn("Gagal mengambil profil backend:", error);
-      } finally {
-        setIsLoadingProfile(false);
-      }
-    };
-
-    fetchProfileFromBackend();
-  }, []);
 
   // 🔥 HANDLE INPUT
   const handleChange = (e) => {
@@ -127,19 +46,8 @@ export default function EditProfil() {
     });
   };
 
-  const isFormComplete = () => {
-    return (
-      formData.namaUsaha &&
-      formData.jenisUsaha &&
-      formData.kategori &&
-      formData.lamaUsaha &&
-      formData.usia &&
-      formData.role
-    );
-  };
-
-  // 🔥 SIMPAN (PERUBAHAN UTAMA KETAT DATABASE)
-  const handleSubmit = async () => {
+  // 🔥 SIMPAN KE LOCALSTORAGE (100% AMAN DI VERCEL TANPA PHP/DATABASE)
+  const handleSubmit = () => {
     if (!formData.nama.trim()) {
       alert("Nama pengguna wajib diisi");
       return;
@@ -175,66 +83,19 @@ export default function EditProfil() {
       return;
     }
 
-    const currentUser = safeParse(localStorage.getItem("user"));
-
-    if (!currentUser?.id_user) {
-      alert("User tidak ditemukan, silakan login ulang");
-      return;
-    }
-
     try {
       setIsSaving(true);
 
-      const response = await fetch(SAVE_PROFILE_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id_user: currentUser.id_user,
-          nama: formData.nama,
-          nama_usaha: formData.namaUsaha,
-          kategori: formData.kategori,
-          jenis_usaha: formData.jenisUsaha,
-          lama_usaha: parseInt(formData.lamaUsaha),
-          usia_pemilik: parseInt(formData.usia),
-          posisi: formData.role,
-          jenis_kelamin: formData.gender,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Terputus dari gerbang keamanan hosting.");
-      }
-
-      const responseText = await response.text();
-      let result = null;
-
-      try {
-        result = JSON.parse(responseText);
-      } catch (jsonError) {
-        throw new Error("Respons server bukan format JSON valid.");
-      }
-
-      // 🔥 KONDISI KETAT: Jika status dari PHP adalah 'error', langsung gagalkan proses!
-      if (!result || result.status === "error" || result?.success === false) {
-        throw new Error(result?.message || "Eror validasi backend database.");
-      }
-
-      // JIKA VALIDASI BERHASIL TERHUBUNG SECARA REAL KE DATABASE MYSQL ONLINE
+      // Simpan data ke local storage agar dikenali oleh seluruh halaman
       localStorage.setItem("profileData", JSON.stringify(formData));
-      if (isFormComplete()) {
-        localStorage.setItem("profileComplete", "true");
-      } else {
-        localStorage.setItem("profileComplete", "false");
-      }
+      localStorage.setItem("profileComplete", "true");
 
-      alert("Profil berhasil diperbarui ke database Broku!");
+      alert("Profil berhasil diperbarui!");
       navigate("/beranda");
 
     } catch (error) {
-      // 🔥 JALUR JUJUR: Tampilkan pesan eror aslinya ke layar, jangan dialihkan ke beranda
-      alert("Gagal Menyimpan Ke Database Broku: " + error.message);
+      console.error(error);
+      alert("Gagal menyimpan data ke browser.");
     } finally {
       setIsSaving(false);
     }
@@ -242,6 +103,8 @@ export default function EditProfil() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#f4f7fb]">
+      <NavbarDashboard />
+
       <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 md:px-8 md:py-10 lg:px-12 xl:px-16">
         {/* HEADER */}
         <section className="max-w-3xl">
@@ -252,12 +115,6 @@ export default function EditProfil() {
           <p className="mt-2 text-sm leading-relaxed text-gray-500 sm:text-base">
             Kelola informasi akun dan profil usaha Broku Anda.
           </p>
-
-          {isLoadingProfile && (
-            <p className="mt-3 text-sm text-green-800">
-              Memuat data profil...
-            </p>
-          )}
         </section>
 
         {/* CARD */}
@@ -335,7 +192,7 @@ export default function EditProfil() {
             {/* LAMA */}
             <div className="min-w-0">
               <label className="text-sm font-medium text-gray-700">
-                Lama Usaha
+                Lama Usaha (Tahun)
               </label>
 
               <input
@@ -350,7 +207,7 @@ export default function EditProfil() {
             {/* USIA */}
             <div className="min-w-0">
               <label className="text-sm font-medium text-gray-700">
-                Usia
+                Usia Pemilik
               </label>
 
               <input
@@ -416,7 +273,7 @@ export default function EditProfil() {
           {/* FOOTER */}
           <div className="mt-8 flex flex-col gap-5 border-t pt-6 sm:mt-10 md:flex-row md:items-center md:justify-between">
             <p className="text-xs leading-relaxed text-gray-400">
-              🔒 Data profile Broku tersimpan aman.
+              🔒 Data profile Broku tersimpan aman di browser.
             </p>
 
             <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end sm:gap-4">
@@ -429,8 +286,8 @@ export default function EditProfil() {
 
               <button
                 onClick={handleSubmit}
-                disabled={isSaving || isLoadingProfile}
-                className="w-full rounded-xl bg-green-800 px-6 py-3 text-white transition hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                disabled={isSaving}
+                className="w-full rounded-xl bg-green-800 px-6 py-3 text-white transition hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto font-semibold"
               >
                 {isSaving ? "Menyimpan..." : "Simpan Perubahan"}
               </button>
