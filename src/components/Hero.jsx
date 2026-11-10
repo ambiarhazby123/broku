@@ -33,11 +33,11 @@ export default function Hero() {
         <h1 className="text-5xl font-bold text-green-900 mt-6 leading-tight">
           Pantau Kesehatan <br />
           <span className="text-gray-500">Bisnis Anda</span> <br />
-         Lebih Mudah Dengan Sisehatku.
+         Lebih Mudah Dengan Broku Analytics.
         </h1>
 
         <p className="text-gray-600 mt-6">
-          SiSehatku Analytics memudahkan data operasional anda menjadi
+          Broku Analytics memudahkan data operasional anda menjadi
           wawasan strategis yang mendorong efisiensi dan laba lebih maksimal.
         </p>
 
