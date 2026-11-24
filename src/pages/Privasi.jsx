@@ -7,7 +7,7 @@ export default function Privasi() {
         </h1>
 
         <p className="mt-4 text-gray-500 text-center text-sm sm:text-base leading-relaxed">
-          Kebijakan ini menjelaskan bagaimana SiSehat mengelola dan melindungi
+          Kebijakan ini menjelaskan bagaimana Broku mengelola dan melindungi
           data pengguna dalam penggunaan platform.
         </p>
 
@@ -17,7 +17,7 @@ export default function Privasi() {
               1. Data yang Dikumpulkan
             </h2>
             <p>
-              SiSehat dapat mengumpulkan data seperti informasi akun, profil
+              Broku dapat mengumpulkan data seperti informasi akun, profil
               UMKM, hasil asesmen, dan data lain yang pengguna masukkan ke dalam
               sistem untuk mendukung proses analisis bisnis.
             </p>
@@ -50,7 +50,7 @@ export default function Privasi() {
               4. Keamanan Data
             </h2>
             <p>
-              SiSehat berupaya menjaga keamanan data pengguna dengan membatasi
+              Broku berupaya menjaga keamanan data pengguna dengan membatasi
               penggunaan data hanya untuk kebutuhan aplikasi dan pengembangan
               layanan.
             </p>
@@ -61,7 +61,7 @@ export default function Privasi() {
               5. Persetujuan Pengguna
             </h2>
             <p>
-              Dengan menggunakan SiSehat, pengguna dianggap memahami dan
+              Dengan menggunakan Broku, pengguna dianggap memahami dan
               menyetujui penggunaan data sesuai kebijakan privasi ini.
             </p>
           </section>

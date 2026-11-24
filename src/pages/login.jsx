@@ -119,7 +119,7 @@ export default function Login() {
         </div>
 
         <p className="text-sm opacity-70">
-          © 2026 SiSehatku Enterprise Suite • Secure Access
+          © 2026 Broku Enterprise Suite • Secure Access
         </p>
       </div>
 

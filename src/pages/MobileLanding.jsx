@@ -2,19 +2,19 @@ import { Link } from "react-router-dom";
 
 export default function MobileLanding() {
   return (
-    <div className="min-h-screen flex flex-col justify-center px-8 bg-gradient-to-br from-white via-slate-100 to-blue-300">
+    <div className="min-h-screen flex flex-col justify-center px-8 bg-gradient-to-br from-white via-green-50 to-green-200">
 
-      <h1 className="text-5xl font-bold text-center text-blue-950">
-        SISEHAT
+      <h1 className="text-5xl font-bold text-center text-green-900">
+        Broku
       </h1>
 
       <div className="mt-24">
 
-        <h2 className="text-3xl font-bold text-blue-950">
+        <h2 className="text-3xl font-bold text-green-900">
           Evaluasi Usaha Anda
         </h2>
 
-        <h2 className="text-3xl font-bold text-blue-500">
+        <h2 className="text-3xl font-bold text-green-700">
           Lebih Cerdas
         </h2>
 
@@ -29,14 +29,14 @@ export default function MobileLanding() {
 
         <Link
           to="/registrasi"
-          className="block text-center bg-blue-950 text-white py-4 rounded-xl"
+          className="block text-center bg-green-800 text-white py-4 rounded-xl hover:bg-green-900"
         >
           Daftar
         </Link>
 
         <Link
           to="/login"
-          className="block text-center bg-white border py-4 rounded-xl"
+          className="block text-center bg-white border border-green-200 text-green-900 py-4 rounded-xl"
         >
           Masuk
         </Link>

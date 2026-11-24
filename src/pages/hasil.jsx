@@ -126,7 +126,7 @@ export default function Hasil() {
           doc.setFontSize(9);
           doc.setTextColor(120, 120, 120);
           doc.text(
-            `SiSehat - Halaman ${i} dari ${totalPages}`,
+            `Broku - Halaman ${i} dari ${totalPages}`,
             pageWidth / 2,
             pageHeight - 10,
             { align: "center" }
@@ -166,7 +166,7 @@ export default function Hasil() {
       doc.setTextColor(90, 90, 90);
       doc.setFontSize(10);
       doc.text(
-        "Laporan ini dibuat berdasarkan 6 metrik utama asesmen SiSehat.",
+        "Laporan ini dibuat berdasarkan 6 metrik utama asesmen Broku.",
         marginX + 55,
         y + 18
       );
@@ -311,7 +311,7 @@ export default function Hasil() {
 
       addFooter();
 
-      const fileName = `laporan-sisehat-${new Date()
+      const fileName = `laporan-broku-${new Date()
         .toISOString()
         .slice(0, 10)}.pdf`;
 

@@ -101,7 +101,7 @@ export default function Kontak() {
           </h1>
 
           <p className="mt-4 text-gray-500 text-sm sm:text-base leading-relaxed">
-            Hubungi tim SiSehat jika Anda memiliki pertanyaan, kendala
+            Hubungi tim Broku jika Anda memiliki pertanyaan, kendala
             penggunaan aplikasi, atau membutuhkan informasi lebih lanjut.
           </p>
 

@@ -100,13 +100,13 @@ export default function Registrasi() {
             Master your business vitality with precision.
           </h2>
           <p className="mt-4 text-green-100">
-            Join thousands of organizations using SiSehat to monitor performance,
+            Join thousands of organizations using Broku to monitor performance,
             analyze risk, and optimize enterprise health through data-driven insights.
           </p>
         </div>
 
         <p className="text-sm opacity-70">
-          © 2026 SiSehat Enterprise Suite • GDPR Compliant
+          © 2026 Broku Enterprise Suite • GDPR Compliant
         </p>
       </div>
 
@@ -123,7 +123,7 @@ export default function Registrasi() {
             </span>
           </div>
 
-          <h2 className="text-2xl font-bold text-green-900">Join SiSehat Today</h2>
+          <h2 className="text-2xl font-bold text-green-900">Join Broku Today</h2>
           <p className="text-gray-500 mt-1">
             Start your business health journey.
           </p>

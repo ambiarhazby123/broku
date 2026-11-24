@@ -7,7 +7,7 @@ export default function SyaratKetentuan() {
         </h1>
 
         <p className="mt-4 text-gray-500 text-center text-sm sm:text-base leading-relaxed">
-          Dengan menggunakan SiSehatku, pengguna setuju untuk mengikuti syarat dan
+          Dengan menggunakan Broku, pengguna setuju untuk mengikuti syarat dan
           ketentuan penggunaan platform ini.
         </p>
 
@@ -17,7 +17,7 @@ export default function SyaratKetentuan() {
               1. Penggunaan Platform
             </h2>
             <p>
-              SiSehatku digunakan sebagai alat bantu analisis dan rekomendasi
+              Broku digunakan sebagai alat bantu analisis dan rekomendasi
               bisnis. Hasil yang ditampilkan bersifat sebagai panduan dan tidak
               menjadi satu-satunya dasar pengambilan keputusan bisnis.
             </p>
@@ -38,7 +38,7 @@ export default function SyaratKetentuan() {
               3. Hasil Asesmen
             </h2>
             <p>
-              Hasil asesmen dan rekomendasi yang diberikan oleh SiSehatku dibuat
+              Hasil asesmen dan rekomendasi yang diberikan oleh Broku dibuat
               berdasarkan data yang diinput oleh pengguna. Semakin lengkap dan
               benar data yang dimasukkan, semakin relevan hasil yang ditampilkan.
             </p>
@@ -49,7 +49,7 @@ export default function SyaratKetentuan() {
               4. Batasan Tanggung Jawab
             </h2>
             <p>
-              SiSehatku tidak bertanggung jawab atas kerugian langsung maupun
+              Broku tidak bertanggung jawab atas kerugian langsung maupun
               tidak langsung yang timbul dari keputusan bisnis yang dibuat
               pengguna berdasarkan hasil analisis platform.
             </p>

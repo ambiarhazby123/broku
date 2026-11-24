@@ -16,18 +16,22 @@ export default function RegistrasiMobile({
   handleRegister,
 }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F5EEDF] via-[#EEF5F4] to-[#63A9EB] pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-green-950 via-green-800 to-green-700 pt-20">
 
       <div className="bg-white rounded-t-[40px] min-h-screen p-8">
 
         <Link
           to="/login"
-          className="text-3xl"
+          className="text-3xl text-green-900"
         >
           ←
         </Link>
 
-        <h1 className="text-4xl font-bold text-[#293B63] mt-4">
+        <p className="mt-4 text-sm font-bold uppercase tracking-[0.2em] text-green-800">
+          Broku
+        </p>
+
+        <h1 className="text-4xl font-bold text-green-900 mt-2">
           Bikin Akun
         </h1>
 
@@ -98,7 +102,7 @@ export default function RegistrasiMobile({
 
           <button
             onClick={handleRegister}
-            className="w-full bg-[#293B63] text-white py-4 rounded-xl font-bold mt-6"
+            className="w-full bg-green-700 hover:bg-green-800 text-white py-4 rounded-xl font-bold mt-6"
           >
             Daftar
           </button>

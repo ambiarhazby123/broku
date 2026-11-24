@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-8">
         {/* LEFT */}
         <div>
-          <h1 className="font-bold text-blue-900 text-lg">SiSehat</h1>
+          <h1 className="font-bold text-green-900 text-lg">Broku</h1>
 
           <p className="text-gray-500 mt-3 max-w-sm text-sm leading-relaxed">
             Platform analisis bisnis terdepan untuk transformasi digital
@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
 
           <p className="text-xs text-gray-400">
-            © 2026 SiSehat Analytics. All rights reserved.
+            © 2026 Broku Analytics. All rights reserved.
           </p>
         </div>
       </div>

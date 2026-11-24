@@ -27,7 +27,7 @@ export default function Navbar({ active }) {
   return (
     <nav className="flex justify-between items-center px-12 py-5 bg-white shadow-sm">
 
-      <h1 className="font-bold text-lg text-blue-900">SiSehat</h1>
+      <h1 className="font-bold text-lg text-green-900">Broku</h1>
 
       {/* MENU */}
       <div className="flex gap-4 md:gap-8 text-sm text-gray-500">
