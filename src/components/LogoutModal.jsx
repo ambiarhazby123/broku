@@ -33,7 +33,7 @@ export default function LogoutModal({ open, onClose, onConfirm }) {
 
         {/* DESC */}
         <p className="text-sm text-gray-500 mt-2">
-          Anda akan keluar dari sesi akun SiSehat Anda.
+          Anda akan keluar dari sesi akun Broku Anda.
           Pastikan semua data analisis Anda telah tersimpan.
         </p>
 
